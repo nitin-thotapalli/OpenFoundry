@@ -1,6 +1,10 @@
 {
   "name": "OpenFoundry preview",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/rust:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
   "postCreateCommand": "npm install --global pnpm@9 && pnpm install --frozen-lockfile",
   "forwardPorts": [
     5173
@@ -9,7 +13,13 @@
     "5173": {
       "label": "OpenFoundry",
       "onAutoForward": "openBrowser"
+    },
+    "5432": {
+      "onAutoForward": "ignore"
+    },
+    "50051": {
+      "onAutoForward": "ignore"
     }
   },
-  "postStartCommand": "bash -c 'if [ -n \"$CODESPACE_NAME\" ]; then export __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=\"$CODESPACE_NAME-5173.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN:-app.github.dev}\"; fi; nohup pnpm dev --host 0.0.0.0 --port 5173 --strictPort </dev/null >/tmp/openfoundry-preview.log 2>&1 &'"
+  "postStartCommand": "bash .devcontainer/start-preview.sh"
 }
