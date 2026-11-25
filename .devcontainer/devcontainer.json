@@ -11,5 +11,5 @@
       "onAutoForward": "openBrowser"
     }
   },
-  "postStartCommand": "bash -c 'nohup pnpm dev --host 0.0.0.0 --port 5173 --strictPort </dev/null >/tmp/openfoundry-preview.log 2>&1 &'"
+  "postStartCommand": "bash -c 'if [ -n \"$CODESPACE_NAME\" ]; then export __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=\"$CODESPACE_NAME-5173.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN:-app.github.dev}\"; fi; nohup pnpm dev --host 0.0.0.0 --port 5173 --strictPort </dev/null >/tmp/openfoundry-preview.log 2>&1 &'"
 }
