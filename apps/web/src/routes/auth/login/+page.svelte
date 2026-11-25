@@ -1,6 +1,7 @@
 <script lang="ts">
   import { listPublicSsoProviders, type PublicSsoProvider } from '$api/auth';
   import { auth } from '$stores/auth';
+  import { demoEnabled, signInDemo } from '$stores/demo';
   import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
 
@@ -24,6 +25,10 @@
     loading = true;
 
     try {
+      if (signInDemo(email, password)) {
+        await goto('/');
+        return;
+      }
       const result = await auth.login(email, password);
       goto(result.status === 'mfa_required' ? '/auth/mfa' : '/');
     } catch (err: any) {
@@ -53,6 +58,10 @@
     <span class="text-4xl text-indigo-500">◆</span>
     <h1 class="text-2xl font-bold mt-2">Sign in to OpenFoundry</h1>
   </div>
+
+  {#if demoEnabled}
+    <p class="mb-4 text-sm text-gray-500">Preview sign-in uses 123@gmail.com and 12345.</p>
+  {/if}
 
   <form onsubmit={handleSubmit} class="space-y-4">
     {#if error}

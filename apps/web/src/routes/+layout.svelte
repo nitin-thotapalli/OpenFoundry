@@ -1,6 +1,7 @@
 <script lang="ts">
   import '../app.css';
   import { auth } from '$stores/auth';
+  import { restoreDemo } from '$stores/demo';
   import { onMount } from 'svelte';
   import { page } from '$app/stores';
   import Sidebar from '$components/layout/Sidebar.svelte';
@@ -10,6 +11,7 @@
   let { children } = $props();
 
   onMount(() => {
+    restoreDemo();
     auth.restore();
   });
 

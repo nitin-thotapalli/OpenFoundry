@@ -1,5 +1,6 @@
 <script lang="ts">
   import { auth } from '$stores/auth';
+  import { demoActive, exitDemo } from '$stores/demo';
   import { goto } from '$app/navigation';
   import NotificationBell from '$components/layout/NotificationBell.svelte';
 
@@ -37,6 +38,12 @@
       >
         Logout
       </button>
+    {:else if $demoActive}
+      <span class="text-sm text-gray-500">Demo preview</span>
+      <button
+        onclick={() => { exitDemo(); goto('/auth/login'); }}
+        class="text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+      >Exit demo</button>
     {:else}
       <a href="/auth/login" class="text-sm text-indigo-600 hover:text-indigo-500">Login</a>
     {/if}

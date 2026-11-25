@@ -1,5 +1,6 @@
 <script lang="ts">
   import { auth } from '$stores/auth';
+  import { demoActive } from '$stores/demo';
 
   const isAuthenticated = auth.isAuthenticated;
 </script>
@@ -11,7 +12,7 @@
 <div class="max-w-5xl mx-auto">
   <h1 class="text-2xl font-bold mb-6">Welcome to OpenFoundry</h1>
 
-  {#if $isAuthenticated}
+  {#if $isAuthenticated || $demoActive}
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <a href="/apps" class="block p-6 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-indigo-300 transition-colors">
         <div class="text-2xl mb-2">🧩</div>
